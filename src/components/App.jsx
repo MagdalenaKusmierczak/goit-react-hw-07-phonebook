@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { getContacts} from '../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectError, selectIsLoading } from '../redux/selectors';
+import { fetchContacts } from '../redux/operations';
 
 import Section from './Section/Section.jsx';
 import ContactList from './ContactList/ContactList.jsx';
@@ -8,17 +9,21 @@ import ContactForm from './ContactForm/ContactForm.jsx';
 import Filter from './Filter/Filter.jsx';
 
 const App = () => {
- const contacts = useSelector(getContacts);
-  //Updating local storage
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
     <Section title="Phonebook">
-      <ContactForm  />
-      <ContactList>
-        <Filter/>
-      </ContactList>
+      <ContactForm />
+      {isLoading && <p>Loading contacts...</p> && error && <p>{error}</p> && (
+        <ContactList>
+          <Filter />
+        </ContactList>
+      )}
     </Section>
   );
 };
