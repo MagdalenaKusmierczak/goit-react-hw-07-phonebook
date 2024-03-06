@@ -19,11 +19,11 @@ const App = () => {
   return (
     <Section title="Phonebook">
       <ContactForm />
-      {isLoading && <p>Loading contacts...</p> && error && <p>{error}</p> && (
-        <ContactList>
-          <Filter />
-        </ContactList>
-      )}
+      <ContactList>
+        {isLoading && error && <b>Request in progress...</b>}
+        <Filter />
+      </ContactList>
+      
     </Section>
   );
 };

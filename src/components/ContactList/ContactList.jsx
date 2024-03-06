@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/operations';
-import { selectContacts, selectFilter } from '../../redux/selectors';
+import { selectFilteredContacts, selectFilter } from '../../redux/selectors';
 import {
   ContactsWrapper,
   ContactsTitle,
@@ -11,7 +11,7 @@ import {
 } from './ContactList.styled';
 
 const ContactList = ({ children }) => {
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(selectFilteredContacts);
   const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
@@ -24,29 +24,20 @@ const ContactList = ({ children }) => {
       <ContactsTitle>Contacts</ContactsTitle>
       {children}
       <ContactsList>
-        {contacts
-          .filter(
-            contact =>
-              contact.name.toLowerCase().includes(filter) ||
-              contact.number.includes(filter)
-          )
-          .map(contact => (
-            <ContactElement key={contact.id}>
-              {contact.name}: {contact.number}
-              <DeleteBtn
-                id={contact.id}
-                onClick={() => handleDelete(contact.id)}
-              >
-                Delete
-              </DeleteBtn>
-            </ContactElement>
-          ))}
+        {contacts.map(contact => (
+          <ContactElement key={contact.id}>
+            {contact.name}: {contact.number}
+            <DeleteBtn id={contact.id} onClick={() => handleDelete(contact.id)}>
+              Delete
+            </DeleteBtn>
+          </ContactElement>
+        ))}
       </ContactsList>
     </ContactsWrapper>
   );
 };
 
 ContactList.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
 };
 export default ContactList;
