@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/operations';
-import { selectFilteredContacts, selectFilter } from '../../redux/selectors';
+import { selectFilteredContacts } from '../../redux/selectors';
 import {
   ContactsWrapper,
   ContactsTitle,
@@ -12,7 +12,7 @@ import {
 
 const ContactList = ({ children }) => {
   const contacts = useSelector(selectFilteredContacts);
-  const filter = useSelector(selectFilter);
+
   const dispatch = useDispatch();
 
   const handleDelete = id => {

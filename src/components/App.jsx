@@ -20,7 +20,7 @@ const App = () => {
     <Section title="Phonebook">
       <ContactForm />
       <ContactList>
-        {isLoading && error && <b>Request in progress...</b>}
+        {isLoading && !error && <b>Request in progress...</b>}
         <Filter />
       </ContactList>
       

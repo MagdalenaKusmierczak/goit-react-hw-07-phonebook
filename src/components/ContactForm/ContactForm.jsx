@@ -11,11 +11,12 @@ const ContactForm = () => {
     evt.preventDefault();
     const name = evt.target[0].value;
     const number = evt.target[1].value;
+    const newContact = { name: name, number: number };
     if (contacts.filter(contact => contact.name === name).length > 0) {
       alert(name + ' is already in contacts.');
       return;
     }
-    dispatch(addContact(name, number));
+    dispatch(addContact(newContact));
     evt.target.reset();
   };
 
